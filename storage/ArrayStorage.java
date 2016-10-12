@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Леха
@@ -14,19 +15,22 @@ import java.util.List;
 public class ArrayStorage implements IStorage {
 
     private static final int LIMIT = 100;
-    private int index;
+    private int arraySize;
+    //protected Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName());
+    private static Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName());
 
     private Resume[] arrayResume = new Resume[LIMIT];
 
     @Override
     public void clear() {
-        for (int i = 0; i < LIMIT; i++) {
-            arrayResume[i] = null;
-        }
+        LOGGER.info("Delete all Object in array");
+        Arrays.fill(arrayResume, null);
+        arraySize = 0;
     }
 
     @Override
     public void save(Resume resume) {
+        LOGGER.info("Save resume with uuid = " + resume.getUuid());
         for (int i = 0; i < LIMIT; i++) {
             if (arrayResume[i] == null)
                 arrayResume[i] = resume;
@@ -78,5 +82,15 @@ public class ArrayStorage implements IStorage {
                 count++;
         }
         return count;
+    }
+
+    private int getIndex(String uuid) {
+        for (int i = 0; i < LIMIT; i++) {
+            if (arrayResume[i] != null) {
+                if (arrayResume[i].getUuid().equals(uuid)) {
+                    return i;
+                }
+            }
+        }return -1;
     }
 }
