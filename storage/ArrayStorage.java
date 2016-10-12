@@ -31,47 +31,45 @@ public class ArrayStorage implements IStorage {
     @Override
     public void save(Resume resume) {
         LOGGER.info("Save resume with uuid = " + resume.getUuid());
-        for (int i = 0; i < LIMIT; i++) {
-            if (arrayResume[i] == null)
-                arrayResume[i] = resume;
-        }
+        int index = getIndex(resume.getUuid());
+        if (index != -1) throw new WebAppException("Resume " + resume.getUuid() + " already exist", resume );
+        arrayResume[arraySize++] = resume;
     }
 
     @Override
     public void update(Resume resume) {
-        for (int i = 0; i < LIMIT; i++) {
-            if (arrayResume[i].getUuid() == resume.getUuid())
-                arrayResume[i] = resume;
-        }
+        LOGGER.info("Upload resume with " + resume.getUuid());
+        int index = getIndex(resume.getUuid());
+        if (index == -1) throw new WebAppException("Resume " + resume.getUuid() + " not exist");
+        arrayResume[index] = resume;
     }
 
     @Override
     public Resume load(String uuid) {
-        Resume found = null;
-        for (int i = 0; i < LIMIT; i++) {
-            if (arrayResume[i].getUuid() == uuid)
-                found = arrayResume[i];
-        }
-        return found;
+        LOGGER.info("Load resume with " + uuid);
+        int index = getIndex(uuid);
+        if (index == -1) throw new WebAppException("Resume " + uuid + " not exist");
+        return  arrayResume[index];
     }
 
     @Override
     public void delete(String uuid) {
-        for (int i = 0; i < LIMIT; i++) {
-            if (arrayResume[i].getUuid() == uuid)
-                arrayResume[i] = null;
-        }
+        LOGGER.info("Delete resume with " + uuid);
+        int index = getIndex(uuid);
+        if (index == -1) throw new WebAppException("Resume " + uuid + " not exist");
+        int numMoved = arraySize - index - 1;
+        if (numMoved > 0)
+            System.arraycopy(arrayResume, index+1, arrayResume, index,
+                    numMoved);
+        arrayResume[--arraySize] = null;
+
     }
 
     @Override
     public Collection<Resume> getAllSorted() {
-        Arrays.sort(arrayResume);
-        List<Resume> list = new LinkedList<>();
-        for (int i = 0; i < LIMIT; i++) {
-            if (arrayResume[i] != null)
-                list.add(arrayResume[i]);
-        }
-        return list;
+        LOGGER.info("Sort array");
+        Arrays.sort(arrayResume, 0, arraySize);
+        return Arrays.asList(Arrays.copyOf(arrayResume, arraySize));
     }
 
     @Override
