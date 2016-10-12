@@ -42,13 +42,40 @@ public class Resume {
 
         Resume resume = (Resume) o;
 
-        return uuid.equals(resume.uuid);
+        if (!uuid.equals(resume.uuid)) return false;
+        if (fullName != null ? !fullName.equals(resume.fullName) : resume.fullName != null) return false;
+        if (location != null ? !location.equals(resume.location) : resume.location != null) return false;
+        if (homePage != null ? !homePage.equals(resume.homePage) : resume.homePage != null) return false;
+        if (contacts != null ? !contacts.equals(resume.contacts) : resume.contacts != null) return false;
+        return sections != null ? sections.equals(resume.sections) : resume.sections == null;
 
     }
 
     @Override
     public int hashCode() {
-        return uuid.hashCode();
+        int result = uuid.hashCode();
+        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (homePage != null ? homePage.hashCode() : 0);
+        result = 31 * result + (contacts != null ? contacts.hashCode() : 0);
+        result = 31 * result + (sections != null ? sections.hashCode() : 0);
+        return result;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setHomePage(String homePage) {
+        this.homePage = homePage;
     }
 
     public String getUuid() {
