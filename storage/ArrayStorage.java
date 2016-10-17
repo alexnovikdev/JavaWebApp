@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * Леха
  * 11.10.2016.
  */
-public class ArrayStorage implements IStorage {
+public class ArrayStorage extends AbstractStorage {
 
     private static final int LIMIT = 100;
     private int arraySize;
