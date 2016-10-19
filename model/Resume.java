@@ -10,12 +10,16 @@ import java.util.UUID;
  */
 public class Resume implements Comparable<Resume> {
 
-    private final String uuid;
+    private String uuid;
     private String fullName;
     private String location;
     private String homePage;
     private List<Contact> contacts = new LinkedList<>();
     private List<Section> sections = new LinkedList<>();
+
+    public Resume() {
+
+    }
 
     public Resume(String fullName, String location) {
         this(UUID.randomUUID().toString(), fullName, location);

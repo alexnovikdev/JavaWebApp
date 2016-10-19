@@ -2,7 +2,8 @@ package ru.webapp.storage;
 
 import ru.webapp.model.Resume;
 
-import java.util.Collection;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Леха
@@ -10,38 +11,46 @@ import java.util.Collection;
  */
 public class MapStorage extends AbstractStorage {
 
-    @Override
-    public void clear() {
+    private Map<String, Resume> map = new HashMap<>();
 
+
+    @Override
+    protected void doClear() {
+        map.clear();
     }
 
     @Override
-    public void save(Resume resume) {
-
+    protected boolean exist(String uuid) {
+        return map.containsKey(uuid);
     }
 
     @Override
-    public void update(Resume resume) {
-
+    protected void doSave(Resume resume) {
+        map.put(resume.getUuid(), resume);
     }
 
     @Override
-    public Resume load(String uuid) {
-        return null;
+    protected void doUpdate(Resume resume) {
+        map.put(resume.getUuid(), resume);
     }
 
     @Override
-    public void delete(String uuid) {
-
+    protected Resume doLoad(String uuid) {
+        return map.get(uuid);
     }
 
     @Override
-    public Collection<Resume> getAllSorted() {
-        return null;
+    protected void doDelete(String uuid) {
+        map.remove(uuid);
+    }
+
+    @Override
+    protected List<Resume> doGetAll() {
+        return new ArrayList<>(map.values());
     }
 
     @Override
     public int size() {
-        return 0;
+        return map.size();
     }
 }
