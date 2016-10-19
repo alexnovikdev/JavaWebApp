@@ -8,7 +8,7 @@ import java.util.Collection;
  * Леха
  * 17.10.2016.
  */
-public class CollectionStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage {
 
     @Override
     public void clear() {
