@@ -2,10 +2,7 @@ package ru.webapp.storage;
 
 import ru.webapp.model.Resume;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -68,7 +65,13 @@ public abstract class AbstractStorage implements IStorage {
     public Collection<Resume> getAllSorted() {
         logger.info("Sort collection");
         List<Resume> list = doGetAll();
-        Collections.sort(list);
+        Collections.sort(list, new Comparator<Resume>() {
+            @Override
+            public int compare(Resume o1, Resume o2) {
+                return 0;
+                //write
+            }
+        });
         return list;
     }
 

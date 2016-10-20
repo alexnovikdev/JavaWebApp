@@ -1,20 +1,18 @@
 package ru.webapp.model;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Леха
  * 07.10.2016.
  */
-public class Resume implements Comparable<Resume> {
+public class Resume { //implements Comparable<Resume> {
 
     private String uuid;
     private String fullName;
     private String location;
     private String homePage;
-    private List<Contact> contacts = new LinkedList<>();
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private List<Section> sections = new LinkedList<>();
 
     public Resume() {
@@ -35,8 +33,8 @@ public class Resume implements Comparable<Resume> {
         sections.add(section);
     }
 
-    public void addContact(Contact contact) {
-        contacts.add(contact);
+    public void addContact(ContactType type, String value) {
+        contacts.put(type, value);
     }
 
     @Override
@@ -83,16 +81,20 @@ public class Resume implements Comparable<Resume> {
         return homePage;
     }
 
-    public List<Contact> getContacts() {
+    public Map<ContactType, String> getContacts() {
         return contacts;
+    }
+
+    public String getContact(ContactType type) {
+        return contacts.get(type);
     }
 
     public List<Section> getSections() {
         return sections;
     }
 
-    @Override
+   /* @Override
     public int compareTo(Resume o) {
         return fullName.compareTo(o.fullName);
-    }
+    }*/
 }
