@@ -93,7 +93,15 @@ public class Resume { //implements Comparable<Resume> {
         return sections;
     }
 
-   /* @Override
+    @Override
+    public String toString() {
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                '}';
+    }
+
+    /* @Override
     public int compareTo(Resume o) {
         return fullName.compareTo(o.fullName);
     }*/
