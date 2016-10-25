@@ -9,14 +9,13 @@ import java.util.logging.Logger;
  * Леха
  * 17.10.2016.
  */
-public class MapStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage<String> {
 
     private Map<String, Resume> map = new HashMap<>();
 
-
     @Override
-    protected void doClear() {
-        map.clear();
+    protected String getContext(String uuid) {
+        return uuid;
     }
 
     @Override
@@ -25,12 +24,17 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doSave(Resume resume) {
+    protected void doClear() {
+        map.clear();
+    }
+
+    @Override
+    protected void doSave(String uuid, Resume resume) {
         map.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void doUpdate(Resume resume) {
+    protected void doUpdate(String uuid, Resume resume) {
         map.put(resume.getUuid(), resume);
     }
 

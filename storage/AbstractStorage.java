@@ -52,20 +52,20 @@ public abstract class AbstractStorage<C> implements IStorage {
         logger.info("Load resume with " + uuid);
         C ctx = getContext(uuid);
         if (!exist(ctx)) throw new WebAppException("Resume " + uuid + "  not exists");
-        return doLoad(ctx, uuid);
+        return doLoad(ctx);
     }
 
-    protected abstract Resume doLoad(C ctx, String uuid);
+    protected abstract Resume doLoad(C ctx);
 
     @Override
     public void delete(String uuid) {
         logger.info("Delete resume with " + uuid);
         C ctx = getContext(uuid);
         if (!exist(ctx)) throw new WebAppException("Resume " + uuid + "  not exists");
-        doDelete(ctx, uuid);
+        doDelete(ctx);
     }
 
-    protected abstract void doDelete(C ctx, String uuid);
+    protected abstract void doDelete(C ctx);
 
     @Override
     public Collection<Resume> getAllSorted() {

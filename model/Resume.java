@@ -1,19 +1,27 @@
 package ru.webapp.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Леха
  * 07.10.2016.
  */
-public class Resume { //implements Comparable<Resume> {
+// TODO add Ser and Ver to all model classes
+public class Resume implements Serializable {
+    static final long serialVersionUID = 1L;
 
     private String uuid;
     private String fullName;
     private String location;
     private String homePage;
     private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-    private List<Section> sections = new LinkedList<>();
+    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+    public static final Resume EMPTY;
+
+    static {
+        EMPTY = new Resume();
+    }
 
     public Resume() {
 
@@ -29,8 +37,8 @@ public class Resume { //implements Comparable<Resume> {
         this.location = location;
     }
 
-    public void addSection(Section section) {
-        sections.add(section);
+    public void addSection(SectionType type, Section section) {
+        sections.put(type, section);
     }
 
     public void addContact(ContactType type, String value) {
@@ -89,8 +97,8 @@ public class Resume { //implements Comparable<Resume> {
         return contacts.get(type);
     }
 
-    public List<Section> getSections() {
-        return sections;
+    public Section getSections(SectionType type) {
+        return sections.get(type);
     }
 
     @Override

@@ -41,12 +41,12 @@ public class ArrayStorage extends AbstractStorage<Integer> {
 
 
     @Override
-    protected Resume doLoad(Integer index, String uuid) {
+    protected Resume doLoad(Integer index) {
         return  arrayResume[index];
     }
 
     @Override
-    protected void doDelete(Integer index, String uuid) {
+    protected void doDelete(Integer index) {
         int numMoved = arraySize - index - 1;
         if (numMoved > 0)
             System.arraycopy(arrayResume, index+1, arrayResume, index,

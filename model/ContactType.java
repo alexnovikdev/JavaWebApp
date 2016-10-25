@@ -1,10 +1,12 @@
 package ru.webapp.model;
 
+import java.io.Serializable;
+
 /**
  * Леха
  * 10.10.2016.
  */
-public enum ContactType {
+public enum ContactType implements Serializable {
     PHONE("Тел."),
     MOBILE("Мобильный"),
     HOME_PHONE("Домашний тел."),
@@ -21,4 +23,6 @@ public enum ContactType {
     public String getTitle() {
         return title;
     }
+
+    public static ContactType[] VALUES = ContactType.values();
 }
