@@ -15,6 +15,7 @@ public enum ContactType implements Serializable {
     ICQ("ICQ");
 
     private String title;
+    static final long serialVersionUID = 1L;
 
     ContactType(String title) {
         this.title = title;

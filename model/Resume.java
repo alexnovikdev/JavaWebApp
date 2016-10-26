@@ -7,7 +7,6 @@ import java.util.*;
  * Леха
  * 07.10.2016.
  */
-// TODO add Ser and Ver to all model classes
 public class Resume implements Serializable {
     static final long serialVersionUID = 1L;
 

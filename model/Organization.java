@@ -1,5 +1,6 @@
 package ru.webapp.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,8 +8,9 @@ import java.util.List;
  * Леха
  * 08.10.2016.
  */
-public class Organization {
+public class Organization implements Serializable {
 
+    static final long serialVersionUID = 1L;
     Link link;
     private List<Period> periods;
 

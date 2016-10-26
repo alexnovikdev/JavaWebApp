@@ -1,10 +1,13 @@
 package ru.webapp.model;
 
+import java.io.Serializable;
+
 /**
  * Леха
  * 07.10.2016.
  */
-public class Link {
+public class Link implements Serializable {
+    static final long serialVersionUID = 1L;
     private final String name;
     private final String url;
 
