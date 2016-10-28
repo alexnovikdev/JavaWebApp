@@ -7,7 +7,7 @@ import java.util.*;
  * Леха
  * 07.10.2016.
  */
-public class Resume implements Serializable {
+public class Resume implements Serializable, Comparable<Resume> {
     static final long serialVersionUID = 1L;
 
     private String uuid;
@@ -23,7 +23,10 @@ public class Resume implements Serializable {
     }
 
     public Resume() {
+    }
 
+    public Resume(String uuid) {
+        this.uuid = uuid;
     }
 
     public Resume(String fullName, String location) {
@@ -44,6 +47,18 @@ public class Resume implements Serializable {
         contacts.put(type, value);
     }
 
+    public void addOrganizationSection(SectionType type, Organization... organizations) {
+        addSection(type, new OrganizationSection(organizations));
+    }
+
+    public void addObjective(String value) {
+        addSection(SectionType.OBJECTIVE, new TextSection(value));
+    }
+
+    public void addMultiTypeSection(SectionType type, String... values) {
+        addSection(type, new MultiTextSection(values));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,6 +73,10 @@ public class Resume implements Serializable {
     @Override
     public int hashCode() {
         return uuid.hashCode();
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public void setFullName(String fullName) {
@@ -92,11 +111,15 @@ public class Resume implements Serializable {
         return contacts;
     }
 
+    public Map<SectionType, Section> getSections() {
+        return sections;
+    }
+
     public String getContact(ContactType type) {
         return contacts.get(type);
     }
 
-    public Section getSections(SectionType type) {
+    public Section getSection(SectionType type) {
         return sections.get(type);
     }
 
@@ -105,7 +128,16 @@ public class Resume implements Serializable {
         return "Resume{" +
                 "uuid='" + uuid + '\'' +
                 ", fullName='" + fullName + '\'' +
+                ", location='" + location + '\'' +
+                ", homePage='" + homePage + '\'' +
+                ", contacts=" + contacts +
+                ", sections=" + sections +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Resume o) {
+        return fullName.compareTo(o.fullName);
     }
 
     /* @Override

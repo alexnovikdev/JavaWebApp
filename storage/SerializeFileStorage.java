@@ -16,22 +16,26 @@ public class SerializeFileStorage extends FileStorage {
         super(path);
     }
 
-    protected void write(File file, Resume resume) {
-        try (FileOutputStream fos = new FileOutputStream(file); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+    @Override
+    protected void write(OutputStream os, Resume resume) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
             oos.writeObject(resume);
-        } catch (IOException e) {
-            throw new WebAppException("Couldn't create file " + file.getAbsolutePath(), resume, e);
         }
     }
 
-    protected Resume read(File file) {
-        Resume r = new Resume();
-        try (InputStream is = new FileInputStream(file); ObjectInputStream ois = new ObjectInputStream(is)) {
+    @Override
+    protected Resume read(InputStream is) throws IOException {
+        try (ObjectInputStream ois = new ObjectInputStream(is)) {
             return (Resume) ois.readObject();
-        } catch (IOException e) {
-            throw new WebAppException("Couldn't read file " + file.getAbsolutePath(), e);
         } catch (ClassNotFoundException e) {
             throw new WebAppException("Error read resume", e);
         }
     }
 }
+
+
+
+
+
+
+

@@ -4,8 +4,7 @@ import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 
 import java.io.*;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Леха
@@ -50,9 +49,25 @@ abstract public class FileStorage extends AbstractStorage<File> {
         write(file, resume);
     }
 
-    abstract protected void write(File file, Resume resume);
+    protected void write(File file, Resume resume) {
+        try {
+            write(new FileOutputStream(file), resume);
+        } catch (IOException e) {
+            throw new WebAppException("Couldn't create file " + file.getAbsolutePath(), resume, e);
+        }
+    }
 
-    abstract protected Resume read(File file);
+    protected Resume read(File file){
+        try {
+            return read(new FileInputStream(file));
+        } catch (IOException e) {
+            throw new WebAppException("Couldn't read file " + file.getAbsolutePath(), e);
+        }
+    }
+
+    abstract protected void write(OutputStream os, Resume resume) throws IOException;
+
+    abstract protected Resume read(InputStream is) throws IOException;
 
     @Override
     protected void doUpdate(File file, Resume resume) {
@@ -72,8 +87,11 @@ abstract public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doGetAll() {
-        //TODO read all
-        return null;
+        File[] files = dir.listFiles();
+        if (files == null) return Collections.emptyList();
+        List<Resume> list = new ArrayList<>(files.length);
+        for (File file : files) list.add(read(file));
+        return list;
     }
 
     @Override
