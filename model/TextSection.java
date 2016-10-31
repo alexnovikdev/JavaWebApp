@@ -14,6 +14,10 @@ public class TextSection extends Section implements Serializable {
         this.value = value;
     }
 
+    public TextSection() {
+
+    }
+
     public String getValue() {
         return value;
     }

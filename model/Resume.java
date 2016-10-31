@@ -1,5 +1,8 @@
 package ru.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.*;
 
@@ -7,6 +10,9 @@ import java.util.*;
  * Леха
  * 07.10.2016.
  */
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Serializable, Comparable<Resume> {
     static final long serialVersionUID = 1L;
 
