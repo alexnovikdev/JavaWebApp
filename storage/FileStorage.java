@@ -42,7 +42,9 @@ abstract public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void doSave(File file, Resume resume) {
         try {
-            file.createNewFile();
+            if (!file.createNewFile()) {
+                throw new WebAppException("couldn't create file " + file);
+            }
         } catch (IOException e) {
             throw new WebAppException("Couldn't create file " + file.getAbsolutePath(), resume, e);
         }

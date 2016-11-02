@@ -88,4 +88,8 @@ public abstract class AbstractStorage<C> implements IStorage {
         return getContext(resume.getUuid());
     }
 
+    @Override
+    public boolean isSectionSupported() {
+        return true;
+    }
 }

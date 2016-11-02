@@ -30,4 +30,9 @@ public class JsonFileStorage extends FileStorage {
         }
         return null;
     }
+
+    @Override
+    public boolean isSectionSupported() {
+        return false;
+    }
 }

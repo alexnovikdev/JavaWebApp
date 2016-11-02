@@ -3,10 +3,9 @@ package ru.webapp.storage;
 import ru.webapp.model.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.*;
 
 /**
  * Леха
@@ -54,7 +53,16 @@ public class DataStreamFileStorage extends FileStorage {
 
                         break;
                     case EXPERIENCE:
-
+                        writeCollection(dos, ((OrganizationSection) section).getValues(), org -> {
+                            writeString(dos, org.getLink().getName());
+                            writeString(dos, org.getLink().getUrl());
+                            DataStreamFileStorage.this.writeCollection(dos, org.getPeriods(), period -> {
+                                DataStreamFileStorage.this.writeLocalDate(dos, period.getStartDate());
+                                DataStreamFileStorage.this.writeLocalDate(dos, period.getEndDate());
+                                writeString(dos, period.getPosition());
+                                writeString(dos, period.getContent());
+                            });
+                        });
                         break;
                 }
             }
@@ -76,9 +84,7 @@ public class DataStreamFileStorage extends FileStorage {
             int contactsSize = dis.readInt();
             for (int i = 0; i < contactsSize; i++)
                 r.addContact(ContactType.VALUES[dis.readInt()], readString(dis));
-            //TODO sections
             int sectionsSize = dis.readInt();
-
             for (int i = 0; i < sectionsSize; i++) {
                 SectionType sectionType = SectionType.valueOf(readString(dis));
                 switch (sectionType) {
@@ -95,12 +101,24 @@ public class DataStreamFileStorage extends FileStorage {
 
                         break;
                     case EXPERIENCE:
-
+                        r.addSection(sectionType,
+                                new OrganizationSection(readList(dis, () -> new Organization(new Link(dis.readUTF(), dis.readUTF()),
+                                        readList(dis, () -> new Organization.Period(readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF()))))));
                         break;
                 }
         }
             return r;
         }
+    }
+
+    private void writeLocalDate(DataOutputStream dos, LocalDate ld) throws IOException {
+        Objects.requireNonNull(ld, "LocalDate cannot be null, use Period.NOW");
+        dos.writeInt(ld.getYear());
+        dos.writeUTF(ld.getMonth().name());
+    }
+
+    private LocalDate readLocalDate(DataInputStream dis) throws IOException {
+        return LocalDate.of(dis.readInt(), Month.valueOf(dis.readUTF()), 1);
     }
 
     private void writeString(DataOutputStream dos, String string) throws IOException {
