@@ -1,6 +1,6 @@
 package ru.webapp.util;
 
-import ru.webapp.storage.WebAppException;
+import ru.webapp.WebAppException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

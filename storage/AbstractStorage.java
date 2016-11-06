@@ -1,5 +1,6 @@
 package ru.webapp.storage;
 
+import ru.webapp.WebAppException;
 import ru.webapp.model.Resume;
 
 import java.util.*;

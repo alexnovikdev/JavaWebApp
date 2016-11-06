@@ -16,7 +16,7 @@ public class XmlFileStorage extends FileStorage {
     public XmlFileStorage(String path) {
         super(path);
         xmlParser = new XmlParser(Resume.class, Organization.class, OrganizationSection.class,
-                Organization.Period.class, TextSection.class, Link.class);
+                Organization.Period.class, TextSection.class, Link.class, MultiTextSection.class);
     }
 
     @Override

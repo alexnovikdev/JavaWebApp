@@ -1,5 +1,7 @@
 package ru.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -7,6 +9,7 @@ import java.util.Objects;
  * Леха
  * 07.10.2016.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Link implements Serializable {
     static final long serialVersionUID = 1L;
 
@@ -25,8 +28,7 @@ public class Link implements Serializable {
     }
 
     public Link(Link linkclone) {
-        this.name = linkclone.name;
-        this.url = linkclone.url;
+        this(linkclone.name, linkclone.url);
     }
 
     public static Link empty() {

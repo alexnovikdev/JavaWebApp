@@ -44,9 +44,7 @@ public class OrganizationSection extends Section implements Serializable{
 
     @Override
     public String toString() {
-        return "OrganizationSection{" +
-                "values=" + values +
-                '}';
+        return values.toString();
     }
 
     public List<Organization> getValues() {

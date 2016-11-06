@@ -40,8 +40,6 @@ public class TextSection extends Section implements Serializable {
 
     @Override
     public String toString() {
-        return "TextSection{" +
-                "value='" + value + '\'' +
-                '}';
+        return value;
     }
 }

@@ -18,8 +18,8 @@ public class Resume implements Serializable, Comparable<Resume> {
 
     private String uuid;
     private String fullName;
-    private String location;
-    private String homePage;
+    private String location = "";
+    private String homePage = "";
     private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
     public static final Resume EMPTY;
@@ -40,9 +40,14 @@ public class Resume implements Serializable, Comparable<Resume> {
     }
 
     public Resume(String uuid, String fullName, String location) {
+        this(uuid, fullName, location, "");
+    }
+
+    public Resume(String uuid, String fullName, String location, String homePage) {
         Objects.requireNonNull(uuid, "uuid is null");
         Objects.requireNonNull(fullName, "fullname is null");
         Objects.requireNonNull(location, "location is null");
+        Objects.requireNonNull(homePage, "homePage is null");
         this.uuid = uuid;
         this.fullName = fullName;
         this.location = location;
@@ -64,7 +69,7 @@ public class Resume implements Serializable, Comparable<Resume> {
         addSection(SectionType.OBJECTIVE, new TextSection(value));
     }
 
-    public void addMultiTypeSection(SectionType type, String... values) {
+    public void addMultiTextSection(SectionType type, String... values) {
         addSection(type, new MultiTextSection(values));
     }
 
@@ -75,13 +80,18 @@ public class Resume implements Serializable, Comparable<Resume> {
 
         Resume resume = (Resume) o;
 
-        return uuid.equals(resume.uuid);
+        if (uuid != null ? !uuid.equals(resume.uuid) : resume.uuid != null) return false;
+        if (fullName != null ? !fullName.equals(resume.fullName) : resume.fullName != null) return false;
+        if (location != null ? !location.equals(resume.location) : resume.location != null) return false;
+        if (homePage != null ? !homePage.equals(resume.homePage) : resume.homePage != null) return false;
+        if (contacts != null ? !contacts.equals(resume.contacts) : resume.contacts != null) return false;
+        return sections != null ? sections.equals(resume.sections) : resume.sections == null;
 
     }
 
     @Override
     public int hashCode() {
-        return uuid.hashCode();
+        return uuid != null ? uuid.hashCode() : 0;
     }
 
     public void setUuid(String uuid) {
@@ -147,6 +157,10 @@ public class Resume implements Serializable, Comparable<Resume> {
     @Override
     public int compareTo(Resume o) {
         return fullName.compareTo(o.fullName);
+    }
+
+    public void removeContact(ContactType type) {
+        contacts.remove(type);
     }
 
     /* @Override

@@ -50,8 +50,6 @@ public class MultiTextSection extends Section implements Serializable {
 
     @Override
     public String toString() {
-        return "MultiTextSection{" +
-                "values=" + values +
-                '}';
+        return values.toString();
     }
 }
