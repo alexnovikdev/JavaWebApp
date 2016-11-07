@@ -42,7 +42,7 @@ public class ResumeServlet extends HttpServlet {
                 r.addContact(type, value);
             }
         }
-        for (SectionType type : SectionType.values()) {
+        /*for (SectionType type : SectionType.values()) {
             String value = request.getParameter(type.name());
             if (type.getHtmlType() == SectionHtmlType.ORGANIZATION) {
                 continue;
@@ -52,7 +52,7 @@ public class ResumeServlet extends HttpServlet {
             } else {
                 r.addSection(type, type.getHtmlType().createSection(value));
             }
-        }
+        }*/
         if (Util.isEmpty(uuid)) {
             storage.save(r);
         } else {
