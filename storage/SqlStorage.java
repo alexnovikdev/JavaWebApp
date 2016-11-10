@@ -95,7 +95,7 @@ public class SqlStorage implements IStorage {
 
     @Override
     public Collection<Resume> getAllSorted() {
-        //TODO implement
+        //TODO implement collection
         return null;
     }
 
